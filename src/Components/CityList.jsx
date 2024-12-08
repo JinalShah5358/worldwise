@@ -3,8 +3,10 @@ import Sppiner from "./Spinner";
 import Message from "./Message";
 
 import styles from "./CityList.module.css";
+import { useCities } from "../context/citiesContext";
 
-function CityList({ cities, isLoading }) {
+function CityList() {
+  const { cities, isLoading } = useCities();
   if (isLoading) return <Sppiner />;
 
   if (!cities.length)
