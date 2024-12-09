@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   MapContainer,
   Marker,
@@ -12,16 +12,15 @@ import { useEffect, useState } from "react";
 import { useCities } from "../context/citiesContext";
 import { useGeolocation } from "../hooks/useGeoLocation";
 import Button from "./Button";
+import { useURLPosition } from "../hooks/useURLPosition";
 function Map() {
-  const [position, setPosition] = useSearchParams();
-  const lat = position.get("lat");
-  const lng = position.get("lng");
+  const [lat, lng] = useURLPosition();
+  console.log(lat, lng);
   const [mapPosition, setMapPosition] = useState([40, 0]);
   const { cities } = useCities();
   const {
     isLoading: isLoadingPosition,
-    position: getLocationPosition,
-
+    position: geoLocationPosition,
     getPosition,
   } = useGeolocation();
 
@@ -32,11 +31,21 @@ function Map() {
     [lat, lng]
   );
 
+  useEffect(
+    function () {
+      if (geoLocationPosition)
+        setMapPosition([geoLocationPosition.lat, geoLocationPosition.lng]);
+    },
+    [geoLocationPosition]
+  );
+
   return (
     <div className={styles.mapContainer}>
-      <Button type="position" onClick={getPosition}>
-        {isLoadingPosition ? "Loading..." : "use your Position"}
-      </Button>
+      {!geoLocationPosition && (
+        <Button type="position" onClick={getPosition}>
+          {isLoadingPosition ? "Loading..." : "use your Position"}
+        </Button>
+      )}
       <MapContainer
         center={mapPosition}
         zoom={6}
@@ -48,7 +57,10 @@ function Map() {
           url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
         />
         {cities.map((city) => (
-          <Marker position={[city.position.lat, city.position.lng]}>
+          <Marker
+            key={city.id}
+            position={[city.position.lat, city.position.lng]}
+          >
             <Popup>
               <span>{city.emoji}</span>
               <span>{city.cityName}</span>
