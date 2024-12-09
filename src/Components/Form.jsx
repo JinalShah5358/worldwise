@@ -10,6 +10,8 @@ import Message from "./Message";
 import Spinner from "./Spinner";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useCities } from "../context/citiesContext";
+import { useNavigate } from "react-router-dom";
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -29,6 +31,8 @@ function Form() {
   const [emoji, setEmoji] = useState();
   const [lat, lng] = useURLPosition();
   const [geoCodingError, setGeoCodingError] = useState();
+  const { createCity, isLoding } = useCities();
+  const navigate = useNavigate();
 
   useEffect(
     function () {
@@ -62,7 +66,7 @@ function Form() {
     [lat, lng]
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!cityName || !date) return;
     const newCity = {
@@ -73,6 +77,8 @@ function Form() {
       notes,
       position: { lat, lng },
     };
+    await createCity(newCity);
+    navigate("/app/cities");
   };
 
   if (isPositionLoading) return <Spinner />;
@@ -81,7 +87,10 @@ function Form() {
     return <Message message="start by clicking on somewhere on the map" />;
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form
+      className={`${styles.form} ${isLoding ? "style.loading" : ""}`}
+      onSubmit={handleSubmit}
+    >
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
