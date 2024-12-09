@@ -1,16 +1,17 @@
 import { createContext, useContext, useEffect, useState } from "react";
+const BASE_URL = "http://localhost:9000";
 
 const CitiesContext = createContext();
 function CitiesProvider({ children }) {
   const [cities, setCities] = useState([]);
   const [isLoding, setIsLoading] = useState(false);
-  const BASE_URL = "http://localhost:9000/";
+  const [currentCity, setCurrentCity] = useState({});
 
   useEffect(function () {
     async function fetchCities() {
       try {
         setIsLoading(true);
-        const res = await fetch(BASE_URL + "cities");
+        const res = await fetch(`${BASE_URL}/cities`);
         const data = await res.json();
         console.log(data);
         setCities(data);
@@ -23,8 +24,23 @@ function CitiesProvider({ children }) {
     fetchCities();
   }, []);
 
+  async function getCity(id) {
+    try {
+      setIsLoading(true);
+      const res = await fetch(`${BASE_URL}/cities/${id}`);
+      const data = await res.json();
+
+      setCurrentCity(data);
+      //   console.log(data, "context");
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
   return (
-    <CitiesContext.Provider value={{ cities, isLoding }}>
+    <CitiesContext.Provider value={{ cities, isLoding, getCity, currentCity }}>
       {children}
     </CitiesContext.Provider>
   );
@@ -36,4 +52,5 @@ function useCities() {
     throw new Error("CitiesContext was use outside of thr citiesprovider");
   return context;
 }
+
 export { CitiesProvider, useCities };
