@@ -88,7 +88,7 @@ function Form() {
 
   return (
     <form
-      className={`${styles.form} ${isLoding ? "style.loading" : ""}`}
+      className={`${styles.form} ${isLoding ? styles.loading : ""}`}
       onSubmit={handleSubmit}
     >
       <div className={styles.row}>
