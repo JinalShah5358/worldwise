@@ -8,8 +8,8 @@ function AuthProvider({ children }) {
     isAuth: false,
   };
   const FAKE_USER = {
-    name: "Jack",
-    email: "jack@example.com",
+    name: "Jinal Shah",
+    email: "Jinal@example.com",
     password: "qwerty",
     avatar: "https://i.pravatar.cc/100?u=zz",
   };

@@ -1,27 +1,27 @@
 {
   "cities": [
     {
-      "id": "0fda",
-      "cityName": "Ahmedabad",
+      "id": "a390",
+      "cityName": "Daskroi",
       "country": "India",
       "emoji": "🇮🇳",
-      "date": "2024-12-10T16:37:12.070Z",
-      "notes": "test 2",
+      "date": "2024-12-10T18:00:23.378Z",
+      "notes": "",
       "position": {
-        "lat": "23.042303868044137",
-        "lng": "72.66357421875001"
+        "lat": "22.897683210648072",
+        "lng": "72.48779296875001"
       }
     },
     {
-      "id": "15e9",
-      "cityName": "El Robledo",
-      "country": "Spain",
-      "emoji": "🇪🇸",
-      "date": "2024-12-10T16:39:13.739Z",
-      "notes": "dsfadsfasdf",
+      "id": "a7cb",
+      "cityName": "Bhicholihapsi",
+      "country": "India",
+      "emoji": "🇮🇳",
+      "date": "2024-12-10T18:00:30.005Z",
+      "notes": "sadsadas",
       "position": {
-        "lat": "39.20236541812612",
-        "lng": "-4.328613281250001"
+        "lat": "22.674847351188536",
+        "lng": "75.93750000000001"
       }
     }
   ]

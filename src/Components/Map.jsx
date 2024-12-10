@@ -16,7 +16,9 @@ import { useURLPosition } from "../hooks/useURLPosition";
 function Map() {
   const [lat, lng] = useURLPosition();
   // console.log(lat, lng);
-  const [mapPosition, setMapPosition] = useState([40, 0]);
+  const [mapPosition, setMapPosition] = useState([
+    22.897683210648072, 72.48779296875001,
+  ]);
   const { cities } = useCities();
   const {
     isLoading: isLoadingPosition,
